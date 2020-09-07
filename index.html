@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>R aplicado a la ECH</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="  Creative Commons Attribution 4.0 International License" />
+    <link href="index_files/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R aplicado a la ECH
+## Setiembre 2020 <br> Gabriela Mathieu
+### <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /> <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+
+---
+
+
+
+
+
+
+class: hide-logo
+# Características del curso
+
+
+
+
+.left-column[
+<i class="fas  fa-laptop-code fa-2x " style="color:#43a2ca;"></i> 
+&lt;br&gt;
+
+<i class="fas  fa-link fa-2x " style="color:#43a2ca;"></i> 
+&lt;br&gt;
+
+<i class="fas  fa-question fa-2x " style="color:#43a2ca;"></i> 
+&lt;br&gt;
+
+<i class="fas  fa-file-alt fa-2x " style="color:#43a2ca;"></i> 
+&lt;br&gt;
+
+<i class="fas  fa-home fa-2x " style="color:#43a2ca;"></i> 
+&lt;br&gt;
+
+<i class="fas  fa-comments fa-2x " style="color:#43a2ca;"></i> 
+]
+.right-column[
+Espacio "presencial": &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;8 talleres de 2,5 horas&lt;/span&gt; cada uno
+&lt;br&gt;
+
+&lt;a href="https://eva.fcs.edu.uy/course/view.php?id=945"&gt;Espacio virtual&lt;/a&gt;
+&lt;br&gt;
+
+Participar durante la clase a través del &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;chat&lt;/span&gt; de zoom o &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;pedir la palabra&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Examen&lt;/span&gt; opcional
+&lt;br&gt;&lt;br&gt;
+
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Dedicación:&lt;/span&gt; durante el curso y después ... es la .red[clave]
+&lt;br&gt;
+
+Comunicación: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;foro y mail&lt;/span&gt;
+]
+
+---
+# Objetivos del curso 
+
+- Introducción al lenguaje &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;R&lt;/span&gt; usando &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;RStudio&lt;/span&gt; aplicado a la ECH.
+
+- Manejar un gran conjunto de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;funciones: básicas y más avanzadas&lt;/span&gt;
+
+- Generar &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;autonomía&lt;/span&gt; para usar R y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;seguir aprendiendo&lt;/span&gt; después del curso.
+
+- Introducir el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;paquete ech&lt;/span&gt; para lograr rápidamente:
+  - &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Calcular&lt;/span&gt; nuevas &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;variables&lt;/span&gt;.
+
+  - &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Estimar indicadores&lt;/span&gt;: estimación puntual y por intervalo
+
+  - Crea &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;visualizaciones&lt;/span&gt; atractivas e informativas.
+
+---
+class: hide-logo
+# ¿Qué haremos hoy?
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;¿Qué es R?&lt;/span&gt;
+&lt;br&gt;
+--
+
+- Usar R como  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;calculadora&lt;/span&gt;
+&lt;br&gt;
+--
+
+- Conceptos básicos: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;objetos y clase de objetos&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Vectores&lt;/span&gt;: numéricos, lógicos y de caracteres
+&lt;br&gt;
+--
+
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Funciones&lt;/span&gt; y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;operadores&lt;/span&gt;
+&lt;br&gt;
+--
+
+- Marco de datos (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;data frame&lt;/span&gt;)
+&lt;br&gt;&lt;br&gt;
+--
+
+&lt;!-- - &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Importar&lt;/span&gt; un archivo csv --&gt;
+&lt;!-- &lt;br&gt; --&gt;
+&lt;!-- -- --&gt;
+
+&lt;!-- -  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Explorar&lt;/span&gt; un conjunto de datos (data frame) --&gt;
+&lt;!-- &lt;br&gt;&lt;br&gt; --&gt;
+&lt;!-- -- --&gt;
+
+- Extensiones a R base: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;paquetes&lt;/span&gt;. 
+- Entorno de trabajo, directorio de trabajo.
+- ¿Qué es un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;script&lt;/span&gt;?
+&lt;br&gt;&lt;br&gt;
+--
+
+- Introducción a la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ECH&lt;/span&gt; y al &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;paquete ech&lt;/span&gt;.
+- Alternaremos entre &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ejemplos&lt;/span&gt; y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ejercicios&lt;/span&gt;
+
+---
+class: hide-logo
+# ¿Qué es <i class="fab  fa-r-project " style="color:#384CB7;"></i>?
+
+.left-column[
+
+<i class="fas  fa-chart-area fa-2x " style="color:#756bb1;"></i> &lt;br&gt;
+
+<i class="fas  fa-code fa-2x " style="color:#2c7fb8;"></i> &lt;br&gt;
+
+<i class="fab  fa-creative-commons-nc fa-2x " style="color:#636363;"></i> &lt;br&gt; 
+
+<i class="fab  fa-osi fa-2x " style="color:#31a354;"></i> &lt;br&gt;
+
+<i class="fab  fa-github fa-2x "></i> &lt;br&gt;
+
+<i class="fab  fa-meetup fa-2x " style="color:#de2d26;"></i>
+]
+
+.rigth-column[
+
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Programa estadístico&lt;/span&gt;: análisis
+&lt;br&gt;&lt;br&gt;
+
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Lenguaje&lt;/span&gt; de programación: sintaxis
+&lt;br&gt;&lt;br&gt;
+
+Software &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;gratuito&lt;/span&gt;, se desacarga desde [CRAN](http://www.r-project.org).
+&lt;br&gt;&lt;br&gt;
+
+Software &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;libre&lt;/span&gt;: licencia [GNU](https://es.wikipedia.org/wiki/GNU_General_Public_License). Libertad de uso, modificación y  distribución.
+&lt;br&gt;
+
+&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Comunidad&lt;/span&gt; mundial: lo usa y mejora. Casi 20.000 paquetes en [CRAN]((https://cran.r-project.org/web/packages/)) y [github](https://github.com/)
+&lt;br&gt;
+
+Comunidad en Uruguay: [meetup R-Ladies](https://www.meetup.com/es-ES/rladies-montevideo/) y [meetup GURU](https://www.meetup.com/es-ES/GURU-mvd/)
+]
+
+---
+# ¿Quiénes usan/usamos R?
+
+&lt;!-- [Visualizador](https://benubah.github.io/r-community-explorer/rugs-cluster-map.html) RUGs y R-Ladies --&gt;
+
+&lt;iframe src="https://benubah.github.io/r-community-explorer/rugs-cluster-map.html"  width="1200" height="520" frameBorder="0"&gt;&lt;/iframe&gt;
+
+&lt;!-- https://rpubs.com/anish20/StackOverflowDeveloperSurveyAnalysis --&gt;
+
+---
+class: inverse, center, middle
+# Intro R
+
+---
+class: hide-logo 
+# Curva de aprendizaje
+
+Al inicio suele ser empinada
+&lt;center&gt;
+&lt;img src="https://media.giphy.com/media/xT5LMNsvvJzIB77S0g/source.gif"/&gt;
+&lt;/center&gt;
+&lt;!-- ![Alt Text](https://media.giphy.com/media/xT5LMNsvvJzIB77S0g/source.gif) --&gt;
+
+---
+class: hide-logo
+# ...
+
+&lt;center&gt;
+&lt;img src="https://media.giphy.com/media/3o6MbtpwBH9tlVMg2k/source.gif"/&gt;
+&lt;/center&gt;
+
+---
+class: hide-logo
+# Ayuda
+
+El curso busca seguir un camino menos empinado pero que nos lleve lejos.
+
+&lt;center&gt;
+&lt;img src="https://media.giphy.com/media/l2Jee8WOulPSBZwaI/source.gif"/&gt;
+&lt;/center&gt;
+
+
+---
+class: hide-logo
+# <i class="fas  fa-greater-than "></i> Abrimos RStudio
+
+
+![](img/terminal.gif)
+
+---
+class: hide-logo
+# ¿Cómo interactuamos con R?
+
+.pull-left[
+- Al abrir RStudio vemos el panel llamado "Console" que es la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;consola&lt;/span&gt; de R.
+
+- R inicia con un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mensaje&lt;/span&gt; de apertura que indica entre otras cosas, la versión.
+
+]
+
+.pull-right[
+- Luego del mensaje de apertura, el 'prompt', &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;&amp;gt;&lt;/span&gt;, indica que R está listo. 
+
+![](img/console.png)
+
+&lt;!-- ![](img/coding.gif) --&gt;
+]
+---
+class: hide-logo
+# ¿Cómo interactuamos con R?
+
+- Es un lenguaje de programación: escribimos &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;código&lt;/span&gt; en la consola para darle órdenes a R.
+
+- Las &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;órdenes&lt;/span&gt; elementales de R consisten en expresiones o asignaciones. 
+--
+
+- Una &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;expresión&lt;/span&gt;, se evalúa, se imprime el resultado y su valor se pierde. 
+
+```r
+*2 + 3
+```
+
+```
+[1] 5
+```
+--
+
+---
+class: hide-logo
+# ¿Cómo interactuamos con R?
+
+
+- Una &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;asignación&lt;/span&gt;, crea un objeto y no se imprime el resultado.
+
+
+
+&lt;code class ='r hljs remark-code'&gt;x &lt;span style='background-color:#ffff7f'&gt;&lt;-&lt;/span&gt; 2 + 3&lt;/code&gt;
+
+--
+
+- Una asignación se hace utilizando el símbolo: <i class="fas  fa-less-than "></i><i class="fas  fa-minus "></i> 
+&lt;br&gt;
+--
+
+- Otros programas estadísticos muestran directamente los resultados, R los guarda en un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;objeto&lt;/span&gt;. 
+&lt;br&gt;
+--
+
+- Ejecuto el nombre del objeto para imprimir/mostrar el resultado
+
+```r
+x 
+```
+
+```
+[1] 5
+```
+
+---
+class: hide-logo
+# Operadores aritméticos
+.pull-left[
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Suma&lt;/span&gt;
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;18 &lt;span style='background-color:#ffff7f'&gt;+&lt;/span&gt; 9&lt;/code&gt;
+
+```
+
+[1] 27
+
+```
+
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Resta&lt;/span&gt;
+
+
+
+&lt;code class ='r hljs remark-code'&gt;18 &lt;span style='background-color:#ffff7f'&gt;-&lt;/span&gt; 9&lt;/code&gt;
+
+```
+
+[1] 9
+
+```
+
+]
+.pull-right[
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Multiplicación&lt;/span&gt;
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;18 &lt;span style='background-color:#ffff7f'&gt;*&lt;/span&gt; 9&lt;/code&gt;
+
+```
+
+[1] 162
+
+```
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;División&lt;/span&gt;
+
+
+
+&lt;code class ='r hljs remark-code'&gt;18 &lt;span style='background-color:#ffff7f'&gt;/&lt;/span&gt; 9&lt;/code&gt;
+
+```
+
+[1] 2
+
+```
+]
+
+
+---
+class: hide-logo
+# Calculadora
+
+- Además de los operadores aritméticos, trae &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;funciones matemáticas&lt;/span&gt;
+
+
+```r
+# valor absoluto
+abs(-1)
+```
+
+```
+[1] 1
+```
+--
+
+--
+
+```r
+# exponencial
+exp(0)
+```
+
+```
+[1] 1
+```
+--
+
+```r
+# raíz cuadrada
+sqrt(9)
+```
+
+```
+[1] 3
+```
+
+---
+class: hide-logo
+# Funciones
+
+- Una  función  es un  conjunto  de  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;instrucciones&lt;/span&gt; que  operan  sobre unos &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;argumentos&lt;/span&gt; y producen un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;resultado&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Una función esconde líneas de código que permite reutilizarlo una y otra vez.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Las funciones tienen &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;nombres&lt;/span&gt; descriptivos -en inglés- y se acompañan de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;paréntesis curvos&lt;/span&gt;. Por ejemplo, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;sqrt()&lt;/span&gt; es la abreviación de square root (raíz cuadrada)
+&lt;br&gt;&lt;br&gt;
+--
+
+- Dentro de los paréntesis se definen los valores de sus argumentos:  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;sqrt(9)&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- La mayoría tiene al menos un argumento obligatorio y el resto con valores por defecto. Usa la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ayuda&lt;/span&gt; de R para saber qué hace una función:
+
+
+```r
+?sqrt 
+help("sqrt")
+```
+---
+class: inverse, center, middle
+# Ayuda
+
+---
+# Buscar ayuda
+
+- Ayuda en R:
+  - Si sabemos el nombre de la función exactamente: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;?gini&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;help(gini)&lt;/span&gt;
+  - Si no sabemos el nombre exacto pero debería contener el término gini: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;??gini&lt;/span&gt;
+  
+- Ayuda externa a R: 
+    - &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;buscador&lt;/span&gt; de un navegador de internet (google, duck duck go, etc.)
+    - en los foros de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Stackoverflow&lt;/span&gt;(https://stackoverflow.com/)
+
+
+![](img/stackoverflow.png)
+
+---
+class: inverse, center, middle
+# RStudio
+
+---
+class: hide-logo
+# Ventanas de [RStudio](https://www.rstudio.com/)
+
+&lt;!-- ![](img/panels2.png)  --&gt;
+
+&lt;img src="img/panels2.png" width="120%" /&gt;
+
+&lt;svg style="height:0.8em;top:.04em;position:relative;fill:#43a2ca;" viewBox="0 0 512 512"&gt;&lt;path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/&gt;&lt;/svg&gt; [Cheatsheet](https://resources.rstudio.com/the-essentials-of-data-science/rstudio-ide)
+
+---
+# Script
+
+![](img/newscript.gif)
+
+---
+# Script
+
+- Un archivo donde se &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;escribe&lt;/span&gt; la sintaxis (el código) y luego se &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;envía&lt;/span&gt; a la consola.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un script permite &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;reproducir&lt;/span&gt; nuestro análisis o que otra persona lo haga.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Tendrá una extensión &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;.R&lt;/span&gt; y al hacer doble click sobre el archivo se abre RStudio.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Es clave &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;comentar&lt;/span&gt; el código, los comentarios deben ir precedidos por &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;#&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Los comentarios se verán de un color diferente al código, incluso cuando se comenta parte de un código.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un comentario se envía a la consola pero &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;no se ejecuta&lt;/span&gt; nada. 
+
+---
+# Autocompleta código
+
+La ventana de script  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;colorea y autocompleta&lt;/span&gt; código. Muestra el  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;help&lt;/span&gt;  de la función.
+
+![](img/colorea.gif)
+
+---
+# Comentarios
+
+![](img/comentarios.gif)
+
+---
+class: hide-logo
+# Ejecutar código
+
+- Una sola línea: colocar el  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;cursor sobre esa línea&lt;/span&gt; y ejecutar  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Ctrl + ENTER&lt;/span&gt;.
+
+![](img/sendcode1.gif)
+
+---
+class: hide-logo
+# Ejecutar código
+
+- Varias líneas de código:  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;seleccionarlas todas&lt;/span&gt; y ejecutar  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Ctrl + ENTER&lt;/span&gt;.
+
+![](img/sendcode2.gif)
+---
+# Espacio de trabajo (workspace / environment)
+
+- Se ubica en la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;memoria RAM&lt;/span&gt;. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- La colección de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;objetos&lt;/span&gt;  generados en una sesión. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ls()&lt;/span&gt;  para obtener el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;listado de los objetos&lt;/span&gt; almacenados en la memoria RAM. 
+&lt;br&gt;&lt;br&gt;
+--
+
+-  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Al cerrar Rstudio se pierden&lt;/span&gt;, pero tenemos la sintaxis para volver a crearlos :)
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Un objeto no modifica un archivo&lt;/span&gt;  a menos que se guarde/exporte como tal usando una función para tal fin. No es posible modificar un archivo por error.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Para eliminar objetos puede utilizar la orden &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;rm()&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Al cerrar RStudio te consulta si querés guardar el espacio de trabajo (workspace), no lo guardes nunca, no sirve para nada. En vez de eso, configura RStudio para que no te haga más esa pregunta.
+
+---
+# ~~Save workspace~~
+
+![](img/saveworkspace.gif)
+
+
+---
+class: inverse, center, middle
+# R 'base'
+
+---
+class: hide-logo
+# Objetos
+
+- R es un programa  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;'orientado a objetos'&lt;/span&gt;: variables, datos, funciones, resultados, etc., se guardan en la memoria RAM en forma de objetos con un nombre específico sin usar archivos temporales. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Cada &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;clase de objeto&lt;/span&gt; tiene diferentes atributos que determinan la forma en que trabajan dentro de R, es decir, define cuáles funciones se le pueden aplicar. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Estos objetos se pueden modificar o manipular con  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;operadores&lt;/span&gt; y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;funciones&lt;/span&gt; --que a su vez son objetos--. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Bajo este término se esconde la simplicidad y flexibilidad de R. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Algunas de las clases más comunes de objetos son: 'numeric', 'character', 'logical' (son &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;vectores&lt;/span&gt;), 'matrix' (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;matriz&lt;/span&gt;), 'data.frame' (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;marco de datos&lt;/span&gt;), 'list' (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;lista&lt;/span&gt;) y 'function' (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;función&lt;/span&gt;).
+
+---
+class: hide-logo
+# Tipo de objetos
+
+La cantidad de clases de objetos es muy grande y crece permanentemente a medida que se crean nuevos paquetes.
+
+&lt;!-- Casi en cada paquete existen funciones que devuelven objetos de clases únicas que sólo esa función puede --&gt;
+&lt;!-- # generar y cuya interpretación y funcionalidad es específica del paquete en --&gt;
+&lt;!-- # cuestión o de otros creados posteriormente y que dependen del mismo.  --&gt;
+&lt;!-- Por ejemplo las clases "igraph" o "Spatial" de los paquetes igraph y sp definen  --&gt;
+&lt;!-- # objetos asociados a trabajo con grafos y datos espaciales respectivamente. --&gt;
+
+
+| Objeto      | Dimensión o largo           | Tipo de elementos | Ejemplo
+|---------------|:-------------:|:------:|:------:|
+| Vector    | length() | homogéneos |<i class="fas  fa-ellipsis-v fa-3x " style="color:#5e3c99;"></i> |
+| Matriz   | dim() | homogéneos |   <i class="fas  fa-ellipsis-v fa-3x " style="color:#5e3c99;"></i><i class="fas  fa-ellipsis-v fa-3x " style="color:#5e3c99;"></i> |
+| Marco de datos    | dim() | heterogéneos |<i class="fas  fa-ellipsis-v fa-3x " style="color:#5e3c99;"></i><i class="fas  fa-ellipsis-v fa-3x " style="color:#e66101;"></i> <i class="fas  fa-ellipsis-v fa-3x " style="color:#41b6c4;"></i>|
+| Lista   | length() | heterogéneos |<i class="fas  fa-circle " style="color:#5e3c99;"></i> &lt;br&gt; <i class="fas  fa-circle " style="color:#e66101;"></i> &lt;br&gt; <i class="fas  fa-circle " style="color:#41b6c4;"></i>| 
+
+---
+class: hide-logo
+# Vector
+
+- Los vectores son la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;estructura más básica&lt;/span&gt; que tenemos para manejar datos en R. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;escalar&lt;/span&gt; también es un &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;vector&lt;/span&gt; para R. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Comprender &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;cómo se trabaja con un vector&lt;/span&gt; en R es fundamental para entender la lógica de R.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Veremos cómo los vectores trabajan con &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;operadores y funciones&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Vectorización y coerción&lt;/span&gt;.
+
+---
+# Vector
+
+- Un vector es una &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;colección de uno o más objetos del mismo tipo&lt;/span&gt; (números o caracteres pero no ambos).
+&lt;br&gt;&lt;br&gt;
+--
+
+- Según sus elementos será la clase del vector: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;character&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;numeric&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;logical&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- La función  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;c()&lt;/span&gt; crea un vector.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Cada elemento va separado por una &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;coma&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- Con la función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;class()&lt;/span&gt; compruebo que tipo de objeto es
+
+---
+class: hide-logo
+# Vector numérico
+
+
+```r
+*x &lt;- c(15, 16, 17, 19)
+```
+--
+
+```r
+x
+```
+
+```
+[1] 15 16 17 19
+```
+--
+
+```r
+*class(x)
+```
+
+```
+[1] "numeric"
+```
+Se crea con la función c(), y contiene solo números separados por coma.
+
+El separador de decimales es el punto.
+
+---
+class: hide-logo
+# Vector de caracteres
+
+- Para el caso de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;texto&lt;/span&gt;, la clase "character" es la que utiliza R para manejar este tipo de objetos. 
+
+- Al igual que en la mayoría de los lenguajes de programación, R utiliza las comillas dobles (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;&amp;quot;&lt;/span&gt;) o simples (&lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;'&lt;/span&gt;) para delimitar un string. 
+
+
+
+```r
+*w &lt;- c("lunes", "martes", "miércoles", "viernes")
+```
+--
+
+```r
+w
+```
+
+```
+[1] "lunes"     "martes"    "miércoles" "viernes"  
+```
+--
+
+```r
+*class(w)
+```
+
+```
+[1] "character"
+```
+
+---
+class: hide-logo
+# Vector de caracteres
+
+- Un vector de clase `character` también puede incluir &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;números&lt;/span&gt; siempre que estén  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;entre comillas&lt;/span&gt;
+
+
+```r
+*w &lt;- c("15", "16", "17", "19")
+```
+--
+
+```r
+w
+```
+
+```
+[1] "15" "16" "17" "19"
+```
+--
+
+```r
+*class(w)
+```
+
+```
+[1] "character"
+```
+
+
+---
+# Nombrar objetos
+
+- Para nombrar objetos se pueden usar: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;letras&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;números&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;punto&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;guión bajo&lt;/span&gt; 
+&lt;br&gt;&lt;br&gt;
+--
+
+- No puede empezar con números ni guión bajo: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;~~2019ech~~&lt;/span&gt;  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;~~_ech~~&lt;/span&gt; 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Si empieza con punto debe seguirle una letra: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;.ech&lt;/span&gt; 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Lo común es que comiencen con una letra: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ech_2019&lt;/span&gt; 
+&lt;br&gt;&lt;br&gt;
+--
+
+- R es &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;sensible a mayúsculas y minúsculas&lt;/span&gt;: no es lo mismo Ech que ech
+&lt;br&gt;&lt;br&gt;
+--
+
+- Esto último vale también para los nombres de funciones, no es lo mismo View() que view(), la segunda no existe.
+&lt;!-- # ver --&gt;
+
+&lt;!--   https://www.computerworld.com/article/2497143/business-intelligence-beginner-s-guide-to-r-introduction.html --&gt;
+
+
+---
+# Ejercicio (6')
+
+- Crea un objeto llamado `nombre` con tu nombre escrito todo en minúscula
+&lt;br
+
+- Crea un objeto llamado  `apellido` con tu apellido escrito todo en minúscula
+&lt;br&gt;
+
+- Crea un objeto llamado `edad` con tu edad en números
+&lt;br&gt;
+
+- Pregunta la clase de cada uno de esos objetos e imprime el contenido de cada objeto.
+&lt;br&gt;
+
+- Crea un objeto llamado `nombre_completo` que contenga tu nombre y tu apellido, reutilizando los objetos creados. La función paste() puede ser de ayuda.
+&lt;br&gt;
+
+- ¿Cuántos caracteres tiene el objeto nombre, y el objeto apellido? La función `nchar()` puede ser de ayuda.
+
+---
+class: hide-logo
+# Coerción
+
+- Qué pasa si por error omito las comillas en un elemento:
+
+```r
+z &lt;- c("lunes", 15)
+```
+--
+
+- R no da error en este caso, convierte al 15 en texto.  
+
+```r
+z
+```
+
+```
+[1] "lunes" "15"   
+```
+
+```r
+class(z)
+```
+
+```
+[1] "character"
+```
+--
+Si se combinan objetos de diferentes tipos, R reasigna los elementos a la clase apropiada. Esto se llama coerción.
+
+
+---
+class: hide-logo
+# Coerción
+
+- Los elementos de un vector deben ser todos de la misma clase. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Si se combinan objetos de diferente clase, R &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;reasigna los elementos a la clase apropiada&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Como en el ejemplo que concatenaba elementos numéricos y caracteres, el vector será de clase `character`.
+&lt;br&gt;&lt;br&gt;
+--
+
+- La coerción es necesaria para el funcionamiento correcto de R. Al mismo tiempo puede ser una fuente de errores si no se tiene en cuenta.
+&lt;br&gt;&lt;br&gt;
+--
+
+- ¿Qué te imaginas pasará si en vez de omitir las comillas en 15, las omito en lunes?
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un texto sin comillas en R es un objeto (siempre que cumpla las reglas de un nombre de objeto).
+---
+class: hide-logo
+# Vectorización
+
+.pull-left[
+- R vectoriza las operaciones de manera que si sumo un número a un vector numérico, a cada elemento del vector le sumará ese número.
+
+- Esta propiedad es una ventaja ya que permite evitar loops en muchas de situaciones y de esta manera se obtiene un código más 'limpio' y eficiente.
+
+- El operador  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;:&lt;/span&gt; sirve para generar vectores numéricos
+
+]
+
+.pull-right[
+
+```r
+*x &lt;- -1:4
+x
+```
+
+```
+[1] -1  0  1  2  3  4
+```
+
+
+```r
+*x + 5 # adiciono 5
+```
+
+```
+[1] 4 5 6 7 8 9
+```
+
+
+```r
+*x * 3 # multiplico por 3
+```
+
+```
+[1] -3  0  3  6  9 12
+```
+
+]
+
+
+---
+class: hide-logo
+# ¿Por qué importa la clase de un objeto?
+
+- La clase de un objeto afecta cómo las funciones trabajan con el mismo. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Por ejemplo, la función mean() puede generar salidas coherentes con objetos numéricos o lógicos, pero no con caracteres. 
+&lt;br&gt;&lt;br&gt;
+--
+
+
+
+```r
+x &lt;- c("15", "16", "17", "19")
+mean(x)
+w + 5
+```
+
+- No toda función se puede aplicar a cualquier tipo de objeto.
+
+---
+class: hide-logo
+# Funciones descriptivas de un vector numérico
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;length(x)&lt;/span&gt;: devuelve la cantidad de elementos de x
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;sort(x, decreasing = F)&lt;/span&gt;: ordena los elementos de manera creciente 
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;sum(x)&lt;/span&gt;: devuelve la suma de los elementos de x
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;max(x)&lt;/span&gt;: máximo
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;min(x)&lt;/span&gt;: mínimo
+
+---
+class: hide-logo
+# Funciones descriptivas de un vector numérico
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mean(x)&lt;/span&gt;: promedio aritmético de x
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;median(x)&lt;/span&gt;: mediana de x
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;sd(x)&lt;/span&gt;: desvío estándar de x
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;var(x)&lt;/span&gt;: varianza de x
+&lt;br&gt;&lt;br&gt;
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;summary(x)&lt;/span&gt;: resumen descriptivo de x (mínimo, máximo, media, mediana, cuartiles)
+---
+class: hide-logo
+# Data frame
+
+- Puede verse como un conjunto de vectores de diferente clase pero de igual largo.
+&lt;br&gt;&lt;br&gt;
+--
+
+- La Función data.frame() crea un marco de datos.
+&lt;br&gt;&lt;br&gt;
+--
+
+
+```r
+df &lt;- data.frame(x, w)
+```
+--
+
+- En un data frame, cada variable es un vector. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- En general el data frame vendrá dado en un archivo que vamos a leer/importar desde R.
+
+---
+# Atajos de teclado
+
+&lt;center&gt;
+&lt;img src="https://media.giphy.com/media/vpURqIvpuDguQ/source.gif"/&gt;
+&lt;/center&gt;
+
+
+---
+class: hide-logo
+# Flecha: atajo de teclado en Linux/Windows
+(teclado en español)
+
+![](img/linux_flecha.png)
+
+---
+class: hide-logo
+# Flecha: atajo de teclado en Mac 
+(teclado en español)
+
+![](img/mac_flecha.png)
+
+---
+# Atajos de teclado
+
+&lt;img src="img/teclas.png" width="544" height="100%" style="display: block; margin: auto;" /&gt;
+---
+# Advertencias (warnings) 
+
+- Mensajes de advertencia **(Warnings)**: no necesariamente hay un error (ejecuta los comandos y solo te advierte de posibles inconvenientes).
+
+
+```r
+x1 &lt;- c(2, 8, 3, 4, 1)
+x2 &lt;- c(0, 7, 5, 5, 6, 1)
+pmax(x1, x2) 
+```
+
+```
+Warning in pmax(x1, x2): an argument will be fractionally recycled
+```
+
+```
+[1] 2 8 5 5 6 2
+```
+
+
+---
+# Errores (errors)
+- Mensajes de error aparecen en la consola con el texto  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Error: ...&lt;/span&gt;. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- El error impide que se ejecute(n) la(s) líneas con error.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Un error en el código es una orden que &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;R no puede interpretar&lt;/span&gt; . 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Pueden deberse a &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;funciones mal escritas&lt;/span&gt; , &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;expresiones erróneas o incompletas&lt;/span&gt;, objetos que no han sido declarados, etc
+&lt;br&gt;
+&lt;img src="img/error_code.gif" style="display: block; margin: auto;" /&gt;
+&lt;br&gt;&lt;br&gt;
+--
+
+- Con &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;práctica&lt;/span&gt; y la ayuda de los foros se &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;aprende&lt;/span&gt; a entender los mensajes de error.
+
+
+
+---
+class: inverse, center, middle
+# Paquetes
+
+---
+class: hide-logo
+# Paquetes: extender las funcionalidades de R
+
+- Por defecto vienen &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;precargadas&lt;/span&gt; una serie de funciones que están en el paquete &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;'base'&lt;/span&gt;.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Las &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;funciones&lt;/span&gt; en R se organizan en paquetes según &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;temas&lt;/span&gt; o disciplinas.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Los paquetes debe &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;instalarse en R una vez&lt;/span&gt; pero es necesario &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;cargarlos en cada sesión&lt;/span&gt; (cada vez que abrimos R). 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Hay millones de funciones si todas estuvieran precargadas, no habría suficiente memoria RAM para trabajar. Existen paquetes de tan variadas disciplinas que es muy probable que utilicemos relativamente pocos. 
+&lt;br&gt;&lt;br&gt;
+--
+
+- Podemos consultar los paquetes disponibles escribiendo la función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;available.packages()&lt;/span&gt; y los instalados usando &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;installed.packages()&lt;/span&gt;. También podemos generar nuestras propias funciones e incluso crear un paquete de R!
+
+---
+
+class: inverse, center, middle
+#Encuesta Continua de Hogares
+
+&lt;!-- ![](img/ech_ine.jpg) --&gt;
+
+---
+# <i class="fas  fa-box-open "></i> Características
+
+- La Encuesta Continua de Hogares (ECH), releva información de los &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;hogares particulares&lt;/span&gt; uruguayos, realizada anualmente por el Instituto Nacional de Estadística (INE).       
+&lt;br&gt;
+--
+
+- Un hogar particular "es  la  persona  o  grupo  de  personas  que  habitan  bajo  un  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mismo  techo&lt;/span&gt;  y  que  al  menos  para  su  alimentación,  dependen  de  un  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;fondo  común&lt;/span&gt;" ([Metodología ENHA 2006](http://www.ine.gub.uy/documents/10181/36026/metodologia+enha+2006.pdf/89bcaa25-5099-46a7-bc1e-9f577c92b21e)).  
+&lt;br&gt;
+--
+
+- Se debe definir una persona &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;jefa de hogar&lt;/span&gt; la que se  tomará  como  referencia para determinar la relación entre quienes integran el hogar.
+&lt;br&gt;&lt;br&gt;
+--
+
+- Los objetivos son obtener &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;indicadores&lt;/span&gt; para monitorear la evolución del &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;mercado de trabajo&lt;/span&gt;, el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;ingreso&lt;/span&gt; de los hogares y las condiciones de vida de la población.     
+&lt;br&gt;
+--
+
+- Los microdatos se obtienen desde la [web del INE](http://ine.gub.uy/web/guest/encuesta-continua-de-hogares1)       
+
+---
+# Dimensiones
+
+- La ECH releva información referente a la vivienda, el hogar y las personas:
+
+  - Características de la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;vivienda&lt;/span&gt;
+      - Tenencia
+      - Materiales de construcción, etc.
+      
+  - Características del &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;hogar&lt;/span&gt;
+      - Cantidad de personas
+      - Relaciones de parentesco, etc.
+  
+  - Características de las &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;personas&lt;/span&gt; que integran los hogares relevados
+      - Situación ocupacional de las personas de 14 o más años
+      - Ingresos
+      - Educación, etc.
+
+---
+class: inverse, center, middle
+# ech
+
+---
+# Paquete ech
+
+- Es un paquete de R para &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;facilitar el procesamiento&lt;/span&gt;de la Encuesta Continua de Hogares. 
+
+- En su versión actual admite trabajar con las ECH de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;2011 a 2019&lt;/span&gt;. 
+
+- Está pensado para trabajar con los &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;microdatos fusionados&lt;/span&gt; (hogares y personas).
+
+- Está en &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;proceso de aceptación&lt;/span&gt; en CRAN. Ahora disponible en [github](https://github.com/calcita/ech).
+
+- Lo desarrollo junto a [Richard Detomasi](https://github.com/RichDeto).
+
+&lt;img src="https://raw.githubusercontent.com/calcita/ech/master/man/figures/ech_logo.png" width="110px" style="display: block; margin: auto;" /&gt;
+---
+# Historia y motivación de ech
+
+.left-column[
+
+
+&lt;img src="https://raw.githubusercontent.com/RichDeto/geouy/master/man/figures/geouy_logo_b.png" width="110px" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="https://raw.githubusercontent.com/holatam/eph/master/man/figures/logo.png" width="110px" style="display: block; margin: auto;" /&gt;
+
+
+&lt;img src="https://camo.githubusercontent.com/09731059c02d852f557d90e2b2fd5ba8a3e97f03/68747470733a2f2f70616368616d616c746573652e6769746875622e696f2f636173656e2f68657869636f6e2e737667" width="110px" style="display: block; margin: auto;" /&gt;
+
+] 
+.right-column[
+
+
+- Una &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;puerta de entrada&lt;/span&gt; a R.
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;Democratizar&lt;/span&gt; el uso de la ECH, brindando una herramienta libre y gratuita.
+
+- Fomentar la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;publicación de código&lt;/span&gt;, no tan común por acá.
+
+- Al principio era rech y así lo presentamos en diferentes eventos de R.
+
+- Luego conocimos otros &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;proyectos similares&lt;/span&gt;: [eph](https://github.com/holatam/eph) (Argentina)  y [casen](https://github.com/pachamaltese/casen) (Chile)... Cambiamos el nombre y quitamos la parte de visualización y Richard creó [geouy](https://github.com/RichDeto/geouy)
+]
+  
+---
+# Ventajas de usar ech
+
+- Función para &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;descargar los microdatos&lt;/span&gt; desde la web del INE
+
+- Funciones para &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;calcular variables&lt;/span&gt;: mercado de trabajo, ingresos, educación, etc.
+
+- Funciones para &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;estimar indicadores&lt;/span&gt;: devuelven siempre un data.frame en formato tidy
+
+- Funciones para &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;descargar los datos de IPC, IPAB&lt;/span&gt;, entre otros, también en un formato tidy.
+
+- Función para &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;descargar el diccionario&lt;/span&gt; comparado entre bases de distintos años.
+
+- [Documentación](https://calcita.github.io/ech/index.html) para facilitar su uso
+
+&lt;!-- ![](https://raw.githubusercontent.com/calcita/Curso-rECH/master/images/descargar_ech.gif) --&gt;
+
+
+&lt;!-- ![](https://raw.githubusercontent.com/calcita/Curso-rECH/master/images/unrar_ech.gif) --&gt;
+
+---
+class: inverse, center, middle
+# devtools::install_github()
+
+---
+# Instalar y cargar ech
+
+- Un paquete &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;se instala una única vez&lt;/span&gt;. 
+
+- Para instalarlo desde &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;CRAN&lt;/span&gt; usamos la función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;install.packages() &lt;/span&gt;.
+
+- Para instalarlo desde &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;github&lt;/span&gt; usamos la función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;install_github()&lt;/span&gt;. Esta función está en el paquete &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;devtools&lt;/span&gt;, si no lo tenemos instalado debemos hacerlo.
+
+
+```r
+# instalamos devtools desde CRAN
+install.packages("devtools")
+```
+
+```r
+# instalamos ech desde github
+devtools::install_github("calcita/ech")
+```
+- Lo &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;cargamos a la sesión&lt;/span&gt; de trabajo con la función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;library()&lt;/span&gt;
+
+
+```r
+library(ech) 
+```
+
+---
+class: inverse, center, middle
+# ech::get_microdata()
+
+---
+# Descargar, descomprimir y leer
+
+La función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;get_microdata()&lt;/span&gt; se encarga de:
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;descargar&lt;/span&gt; los microdatos del año indicado desde la web del INE 
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;descomprimir&lt;/span&gt; el archivo
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;leer&lt;/span&gt; en R el archivo que contiene datos de personas y hogares fusionado
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;guardar&lt;/span&gt; el objeto en formato RData (opcional)
+
+
+
+
+```r
+# leer archivo de 2019
+*ech19 &lt;- get_microdata(year = 2019, toR = TRUE)
+
+# consultar clase de objeto
+class(ech19)
+```
+El archivo descargado, va por defecto a una carpeta temporal.
+
+---
+# Directorio de trabajo (working directory)
+
+
+- Refiere a los archivos que están en la &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;computadora&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+--
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;getwd()&lt;/span&gt;: muestra la ruta del directorio de trabajo. R trabaja por defecto en cierta carpeta que se llama directorio de trabajo donde va a leer y guardar los archivos.
+&lt;br&gt;&lt;br&gt;
+--
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;setwd()&lt;/span&gt;: define el directorio de trabajo, para modificarlo.
+  - No es recomendable que la correcta ejecución de la sintaxis dependa de una ruta específica...
+  - Más adelante veremos qué es trabajar en proyecto (Rproj) para salvar este problema.
+--
+
+- &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;dir()&lt;/span&gt;: muestra los archivos que están en el directorio de trabajo
+&lt;br&gt;&lt;br&gt;
+--
+- R no entiende el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;\&lt;/span&gt; (con backslash se escriben las rutas en Windows)
+&lt;br&gt;&lt;br&gt;
+--
+- Las rutas en R se definen con &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;/&lt;/span&gt; y también es válido  usar `\\`
+
+
+---
+class: inverse, center, middle
+# Explorar los datos
+
+---
+# "Ver" los datos
+
+
+
+```r
+# ver los primeros casos del objeto en la consola
+*head(ech19)
+```
+
+
+```
+# A tibble: 3 x 8
+  numero      nper anio          mes       dpto nomdpto secc  segm 
+  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;dbl+lbl&gt;  &lt;dbl+lbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;
+1 2019000001     1 2019  8 [Agosto]  14 [Rocha] ROCHA   00    000  
+2 2019000001     2 2019  8 [Agosto]  14 [Rocha] ROCHA   00    000  
+3 2019000002     1 2019  2 [Febrero] 15 [Salto] SALTO   00    000  
+```
+
+
+```r
+# ver los últimos casos del objeto en la consola
+tail(ech19)
+
+# ver el conjunto de datos en un ventana
+View(ech19)
+
+# ver que contiene directo en la consola. No recomendado!!!
+ech19
+```
+
+
+---
+# ¿Qué queremos averiguar de estos datos?
+
+- Primero me hago preguntas, luego pienso cuál es el código que las responde
+&lt;br&gt;&lt;br&gt;
+--
+
+- ¿Cuáles son las &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;variables&lt;/span&gt;? ¿Cuántas son?
+&lt;br&gt;&lt;br&gt;
+--
+
+- ¿Cuántas &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;observaciones&lt;/span&gt; tiene?
+&lt;br&gt;&lt;br&gt;
+--
+
+- ¿Cuál es el &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;identificador&lt;/span&gt; del hogar?
+&lt;br&gt;&lt;br&gt;
+--
+
+- ¿Hay datos &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;faltantes&lt;/span&gt;?
+&lt;br&gt;&lt;br&gt;
+--
+
+- ¿Hay casos &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;duplicados&lt;/span&gt;?
+
+---
+# Explorar los datos
+
+Las funciones &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;dim()&lt;/span&gt; y &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;names()&lt;/span&gt; admiten un data frame como argumento. 
+
+
+```r
+*dim(ech19)  # cantidad de filas y columnas
+```
+
+```
+[1] 107871    556
+```
+
+```r
+nrow(ech19) # cantidad de filas
+```
+
+```
+[1] 107871
+```
+
+```r
+ncol(ech19) # cantidad de columnas
+```
+
+```
+[1] 556
+```
+
+```r
+*names(ech19)  # nombre de variables
+
+sort(names(ech19)) # ver los nombres por orden alfabético
+```
+
+---
+class: inverse, center, middle
+# ech::organize_names()
+
+
+---
+# Estandarizar los nombres de variables
+  
+- Los nombres de las variables pueden sufrir modificaciones entre un año y otro de la encuesta.
+
+- La función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;organize_names()&lt;/span&gt; convierte todos los nombres a la ECH 2017
+
+- Las variables pueden sufrir entre un año y otro un cambio en sus categorías, esto se contempla en las funciones que crean variables.
+
+- Estandarizar los nombres facilita el uso de ech pero &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;no es imprescindible&lt;/span&gt;.
+
+
+```r
+# estandarizo nombres
+*ech19 &lt;- organize_names(data = ech19, year = 2019)
+```
+---
+# Explorar los datos 
+
+La función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;summary()&lt;/span&gt; admite un data frame como argumento pero también una variable.
+
+
+```r
+# estructura del objeto
+str(ech19)
+
+# resumen descriptivo de variables
+summary(ech19)
+
+# una variable específica
+
+summary(ech19$region_3)
+```
+Para acceder a una variable de un data frame es necesario escribir  &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;&amp;lt;objeto&amp;gt;$&amp;lt;variable&amp;gt;&lt;/span&gt;
+
+---
+# Variables numéricas
+
+La variable &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;d9&lt;/span&gt; es el "número de habitaciones residenciales".
+
+.pull-left[
+
+```r
+# Máximo
+*max(ech19$d9)
+```
+
+```
+[1] 18
+```
+
+```r
+# Mínimo
+*min(ech19$d9)
+```
+
+```
+[1] 1
+```
+
+```r
+# Promedio
+*mean(ech19$d9)
+```
+
+```
+[1] 3.657359
+```
+
+]
+
+.pull-right[
+
+```r
+# Mediana
+*median(ech19$d9)
+```
+
+```
+[1] 4
+```
+
+
+```r
+# Varianza
+*var(ech19$d9)
+```
+
+```
+[1] 1.450789
+```
+
+```r
+# Desvío estándar
+*sd(ech19$d9)
+```
+
+```
+[1] 1.204487
+```
+]
+---
+# Variables categóricas
+
+La función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;table()&lt;/span&gt; permite hacer una tabla de &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;frecuencias absolutas.&lt;/span&gt; 
+
+```r
+*table(ech19$nomdpto)
+```
+
+```
+
+       ARTIGAS      CANELONES    CERRO LARGO        COLONIA        DURAZNO 
+          2881          16543           3237           4398           2216 
+        FLORES        FLORIDA      LAVALLEJA      MALDONADO     MONTEVIDEO 
+          1113           2372           1946           5193          38207 
+      PAYSANDU      RIO NEGRO         RIVERA          ROCHA          SALTO 
+          4090           1896           3999           3207           4757 
+      SAN JOSE        SORIANO     TACUAREMBO TREINTA Y TRES 
+          4155           2732           3227           1702 
+```
+
+```r
+# Tabla de frecuencias relativas
+?prop.table
+```
+
+La salida que generan estas funciones no es tidy y conforme más categorías tiene una variable se vuelve más confusa.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">   <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">   </div> </div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

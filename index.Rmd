@@ -1,0 +1,1361 @@
+---
+title: "R aplicado a la ECH"
+subtitle: "Setiembre 2020 <br> Gabriela Mathieu"
+#`r icon::fa_r_project(colour = "#43a2ca")`
+# author: "<br> `r icon::fa_creative_commons(colour = "#f0f0f0")` `r icon::fa_creative_commons_by(colour = "#f0f0f0")` `r icon::fa_creative_commons_sa(colour = "#f0f0f0")` <br> Gabriela Mathieu"
+author: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /> <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    #css: [default, default-fonts, rladies-fonts]
+    #lib_dir: libs
+    nature:
+       highlightStyle: github
+       highlightLines: true
+       countIncrementalSlides: false
+       ratio: "16:9"
+       slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---
+```{r, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+library(flipbookr)
+library(tidyverse)
+library(flair)
+library(kableExtra)
+```
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  #base_color = "#43a2ca",
+  header_font_google = google_font("Mukta"),#Ubuntu Condensed
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Fira Mono"),
+  primary_color      = "#0F4C81", # pantone classic blue
+  secondary_color    = "#b3e2cd", # pantone baby blue
+  #header_font_google = google_font("Raleway"),
+  #text_font_google   = google_font("Raleway", "300", "300i"),
+  #code_font_google   = google_font("Source Code Pro"),
+  text_font_size     = "25px"
+#   colors = c(
+#   red = "#f34213",
+#   purple = "#3e2f5b",
+#   orange = "#ff8811",
+#   green = "#136f63",
+#   white = "#FFFFFF",
+# )
+)
+
+```
+
+```{r, include=FALSE}
+text_spec2 <- function(x = "x"){
+  text_spec(x, background = "#b3e2cd", bold = T)
+}
+```
+
+class: hide-logo
+# Características del curso
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+
+.left-column[
+`r icon::fa("laptop-code", size=2, color = "#43a2ca")` 
+<br>
+
+`r icon::fa("link", size=2, color = "#43a2ca")` 
+<br>
+
+`r icon::fa("question", size=2, color = "#43a2ca")` 
+<br>
+
+`r icon::fa("file-alt", size=2, color = "#43a2ca")` 
+<br>
+
+`r icon::fa("home", size=2, color = "#43a2ca")` 
+<br>
+
+`r icon::fa("comments", size=2, color = "#43a2ca")` 
+]
+.right-column[
+Espacio "presencial": `r text_spec2("8 talleres de 2,5 horas")` cada uno
+<br>
+
+<a href="https://eva.fcs.edu.uy/course/view.php?id=945">Espacio virtual</a>
+<br>
+
+Participar durante la clase a través del `r text_spec2("chat")` de zoom o `r text_spec2("pedir la palabra")`.
+<br><br>
+
+`r text_spec2("Examen")` opcional
+<br><br>
+
+`r text_spec2("Dedicación:")` durante el curso y después ... es la .red[clave]
+<br>
+
+Comunicación: `r text_spec2("foro y mail")`
+]
+
+---
+# Objetivos del curso 
+
+- Introducción al lenguaje `r text_spec2("R")` usando `r text_spec2("RStudio")` aplicado a la ECH.
+
+- Manejar un gran conjunto de `r text_spec2("funciones: básicas y más avanzadas")`
+
+- Generar `r text_spec2("autonomía")` para usar R y `r text_spec2("seguir aprendiendo")` después del curso.
+
+- Introducir el `r text_spec2("paquete ech")` para lograr rápidamente:
+  - `r text_spec2("Calcular")` nuevas `r text_spec2("variables")`.
+
+  - `r text_spec2("Estimar indicadores")`: estimación puntual y por intervalo
+
+  - Crea `r text_spec2("visualizaciones")` atractivas e informativas.
+
+---
+class: hide-logo
+# ¿Qué haremos hoy?
+
+- `r text_spec2("¿Qué es R?")`
+<br>
+--
+
+- Usar R como  `r text_spec2("calculadora")`
+<br>
+--
+
+- Conceptos básicos: `r text_spec2("objetos y clase de objetos")`
+<br><br>
+--
+
+-  `r text_spec2("Vectores")`: numéricos, lógicos y de caracteres
+<br>
+--
+
+-  `r text_spec2("Funciones")` y `r text_spec2("operadores")`
+<br>
+--
+
+- Marco de datos (`r text_spec2("data frame")`)
+<br><br>
+--
+
+<!-- - `r text_spec2("Importar")` un archivo csv -->
+<!-- <br> -->
+<!-- -- -->
+
+<!-- -  `r text_spec2("Explorar")` un conjunto de datos (data frame) -->
+<!-- <br><br> -->
+<!-- -- -->
+
+- Extensiones a R base: `r text_spec2("paquetes")`. 
+- Entorno de trabajo, directorio de trabajo.
+- ¿Qué es un `r text_spec2("script")`?
+<br><br>
+--
+
+- Introducción a la `r text_spec2("ECH")` y al `r text_spec2("paquete ech")`.
+- Alternaremos entre `r text_spec2("ejemplos")` y `r text_spec2("ejercicios")`
+
+---
+class: hide-logo
+# ¿Qué es `r icon::fa_r_project(colour = "#384CB7")`?
+
+.left-column[
+
+`r icon::fa("chart-area", size=2, color="#756bb1")` <br>
+
+`r icon::fa("code", size=2, color="#2c7fb8")` <br>
+
+`r icon::fa("creative-commons-nc", size=2, color="#636363")` <br> 
+
+`r icon::fa("osi", size=2, color="#31a354")` <br>
+
+`r icon::fa("github", size=2)` <br>
+
+`r icon::fa("meetup", size=2, color="#de2d26")`
+]
+
+.rigth-column[
+
+`r text_spec2("Programa estadístico")`: análisis
+<br><br>
+
+`r text_spec2("Lenguaje")` de programación: sintaxis
+<br><br>
+
+Software `r text_spec2("gratuito")`, se desacarga desde [CRAN](http://www.r-project.org).
+<br><br>
+
+Software `r text_spec2("libre")`: licencia [GNU](https://es.wikipedia.org/wiki/GNU_General_Public_License). Libertad de uso, modificación y  distribución.
+<br>
+
+`r text_spec2("Comunidad")` mundial: lo usa y mejora. Casi 20.000 paquetes en [CRAN]((https://cran.r-project.org/web/packages/)) y [github](https://github.com/)
+<br>
+
+Comunidad en Uruguay: [meetup R-Ladies](https://www.meetup.com/es-ES/rladies-montevideo/) y [meetup GURU](https://www.meetup.com/es-ES/GURU-mvd/)
+]
+
+---
+# ¿Quiénes usan/usamos R?
+
+<!-- [Visualizador](https://benubah.github.io/r-community-explorer/rugs-cluster-map.html) RUGs y R-Ladies -->
+
+<iframe src="https://benubah.github.io/r-community-explorer/rugs-cluster-map.html"  width="1200" height="520" frameBorder="0"></iframe>
+
+<!-- https://rpubs.com/anish20/StackOverflowDeveloperSurveyAnalysis -->
+
+---
+class: inverse, center, middle
+# Intro R
+
+---
+class: hide-logo 
+# Curva de aprendizaje
+
+Al inicio suele ser empinada
+<center>
+<img src="https://media.giphy.com/media/xT5LMNsvvJzIB77S0g/source.gif"/>
+</center>
+<!-- ![Alt Text](https://media.giphy.com/media/xT5LMNsvvJzIB77S0g/source.gif) -->
+
+---
+class: hide-logo
+# ...
+
+<center>
+<img src="https://media.giphy.com/media/3o6MbtpwBH9tlVMg2k/source.gif"/>
+</center>
+
+---
+class: hide-logo
+# Ayuda
+
+El curso busca seguir un camino menos empinado pero que nos lleve lejos.
+
+<center>
+<img src="https://media.giphy.com/media/l2Jee8WOulPSBZwaI/source.gif"/>
+</center>
+
+
+---
+class: hide-logo
+# `r icon::fa("greater-than")` Abrimos RStudio
+
+
+![](img/terminal.gif)
+
+---
+class: hide-logo
+# ¿Cómo interactuamos con R?
+
+.pull-left[
+- Al abrir RStudio vemos el panel llamado "Console" que es la `r text_spec2("consola")` de R.
+
+- R inicia con un `r text_spec2("mensaje")` de apertura que indica entre otras cosas, la versión.
+
+]
+
+.pull-right[
+- Luego del mensaje de apertura, el 'prompt', `r text_spec2(">")`, indica que R está listo. 
+
+![](img/console.png)
+
+<!-- ![](img/coding.gif) -->
+]
+---
+class: hide-logo
+# ¿Cómo interactuamos con R?
+
+- Es un lenguaje de programación: escribimos `r text_spec2("código")` en la consola para darle órdenes a R.
+
+- Las `r text_spec2("órdenes")` elementales de R consisten en expresiones o asignaciones. 
+--
+
+- Una `r text_spec2("expresión")`, se evalúa, se imprime el resultado y su valor se pierde. 
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+2 + 3  #<<
+```
+--
+
+---
+class: hide-logo
+# ¿Cómo interactuamos con R?
+
+
+- Una `r text_spec2("asignación")`, crea un objeto y no se imprime el resultado.
+```{r flecha, include = FALSE}
+
+x <- 2 + 3
+```
+
+```{r, echo = FALSE}
+
+decorate("flecha") %>% 
+  flair("<-")
+  
+```
+
+--
+
+- Una asignación se hace utilizando el símbolo: `r icon::fa("less-than")``r icon::fa("minus")` 
+<br>
+--
+
+- Otros programas estadísticos muestran directamente los resultados, R los guarda en un `r text_spec2("objeto")`. 
+<br>
+--
+
+- Ejecuto el nombre del objeto para imprimir/mostrar el resultado
+```{r }
+x 
+```
+
+---
+class: hide-logo
+# Operadores aritméticos
+.pull-left[
+
+- `r text_spec2("Suma")`
+
+```{r sum, include = FALSE}
+18 + 9
+```
+
+```{r, echo = FALSE}
+decorate("sum") %>% 
+  flair("+")
+```
+
+
+- `r text_spec2("Resta")`
+```{r minus, include = FALSE}
+18 - 9
+```
+
+```{r, echo = FALSE}
+decorate("minus") %>% 
+  flair("-")
+```
+
+]
+.pull-right[
+
+- `r text_spec2("Multiplicación")`
+
+```{r por, include = FALSE}
+18 * 9
+```
+
+```{r, echo = FALSE}
+decorate("por") %>% 
+  flair("*")
+```
+
+- `r text_spec2("División")`
+```{r divido, include = FALSE}
+18 / 9
+```
+
+```{r, echo = FALSE}
+decorate("divido") %>% 
+  flair("/")
+```
+]
+
+
+---
+class: hide-logo
+# Calculadora
+
+- Además de los operadores aritméticos, trae `r text_spec2("funciones matemáticas")`
+
+```{r}
+# valor absoluto
+abs(-1)
+```
+--
+
+--
+```{r}
+# exponencial
+exp(0)
+```
+--
+```{r}
+# raíz cuadrada
+sqrt(9)
+```
+
+---
+class: hide-logo
+# Funciones
+
+- Una  función  es un  conjunto  de  `r text_spec2("instrucciones")` que  operan  sobre unos `r text_spec2("argumentos")` y producen un `r text_spec2("resultado")`.
+<br><br>
+--
+
+- Una función esconde líneas de código que permite reutilizarlo una y otra vez.
+<br><br>
+--
+
+- Las funciones tienen `r text_spec2("nombres")` descriptivos -en inglés- y se acompañan de `r text_spec2("paréntesis curvos")`. Por ejemplo, `r text_spec2("sqrt()")` es la abreviación de square root (raíz cuadrada)
+<br><br>
+--
+
+- Dentro de los paréntesis se definen los valores de sus argumentos:  `r text_spec2("sqrt(9)")`
+<br><br>
+--
+
+- La mayoría tiene al menos un argumento obligatorio y el resto con valores por defecto. Usa la `r text_spec2("ayuda")` de R para saber qué hace una función:
+
+```{r}
+?sqrt 
+help("sqrt")
+```
+---
+class: inverse, center, middle
+# Ayuda
+
+---
+# Buscar ayuda
+
+- Ayuda en R:
+  - Si sabemos el nombre de la función exactamente: `r text_spec2("?gini")`, `r text_spec2("help(gini)")`
+  - Si no sabemos el nombre exacto pero debería contener el término gini: `r text_spec2("??gini")`
+  
+- Ayuda externa a R: 
+    - `r text_spec2("buscador")` de un navegador de internet (google, duck duck go, etc.)
+    - en los foros de `r text_spec2("Stackoverflow")`(https://stackoverflow.com/)
+
+
+![](img/stackoverflow.png)
+
+---
+class: inverse, center, middle
+# RStudio
+
+---
+class: hide-logo
+# Ventanas de [RStudio](https://www.rstudio.com/)
+
+<!-- ![](img/panels2.png)  -->
+
+```{r out.width="120%", echo=FALSE}
+knitr::include_graphics("img/panels2.png")
+```
+
+`r fontawesome::fa("link", fill = "#43a2ca")` [Cheatsheet](https://resources.rstudio.com/the-essentials-of-data-science/rstudio-ide)
+
+---
+# Script
+
+![](img/newscript.gif)
+
+---
+# Script
+
+- Un archivo donde se `r text_spec2("escribe")` la sintaxis (el código) y luego se `r text_spec2("envía")` a la consola.
+<br><br>
+--
+
+- Un script permite `r text_spec2("reproducir")` nuestro análisis o que otra persona lo haga.
+<br><br>
+--
+
+- Tendrá una extensión `r text_spec2(".R")` y al hacer doble click sobre el archivo se abre RStudio.
+<br><br>
+--
+
+- Es clave `r text_spec2("comentar")` el código, los comentarios deben ir precedidos por `r text_spec2("#")`.
+<br><br>
+--
+
+- Los comentarios se verán de un color diferente al código, incluso cuando se comenta parte de un código.
+<br><br>
+--
+
+- Un comentario se envía a la consola pero `r text_spec2("no se ejecuta")` nada. 
+
+---
+# Autocompleta código
+
+La ventana de script  `r text_spec2("colorea y autocompleta")` código. Muestra el  `r text_spec2("help")`  de la función.
+
+![](img/colorea.gif)
+
+---
+# Comentarios
+
+![](img/comentarios.gif)
+
+---
+class: hide-logo
+# Ejecutar código
+
+- Una sola línea: colocar el  `r text_spec2("cursor sobre esa línea")` y ejecutar  `r text_spec2("Ctrl + ENTER")`.
+
+![](img/sendcode1.gif)
+
+---
+class: hide-logo
+# Ejecutar código
+
+- Varias líneas de código:  `r text_spec2("seleccionarlas todas")` y ejecutar  `r text_spec2("Ctrl + ENTER")`.
+
+![](img/sendcode2.gif)
+---
+# Espacio de trabajo (workspace / environment)
+
+- Se ubica en la `r text_spec2("memoria RAM")`. 
+<br><br>
+--
+
+- La colección de `r text_spec2("objetos")`  generados en una sesión. 
+<br><br>
+--
+
+- `r text_spec2("ls()")`  para obtener el `r text_spec2("listado de los objetos")` almacenados en la memoria RAM. 
+<br><br>
+--
+
+-  `r text_spec2("Al cerrar Rstudio se pierden")`, pero tenemos la sintaxis para volver a crearlos :)
+<br><br>
+--
+
+- `r text_spec2("Un objeto no modifica un archivo")`  a menos que se guarde/exporte como tal usando una función para tal fin. No es posible modificar un archivo por error.
+<br><br>
+--
+
+- Para eliminar objetos puede utilizar la orden `r text_spec2("rm()")`.
+<br><br>
+--
+
+- Al cerrar RStudio te consulta si querés guardar el espacio de trabajo (workspace), no lo guardes nunca, no sirve para nada. En vez de eso, configura RStudio para que no te haga más esa pregunta.
+
+---
+# ~~Save workspace~~
+
+![](img/saveworkspace.gif)
+
+
+---
+class: inverse, center, middle
+# R 'base'
+
+---
+class: hide-logo
+# Objetos
+
+- R es un programa  `r text_spec2("'orientado a objetos'")`: variables, datos, funciones, resultados, etc., se guardan en la memoria RAM en forma de objetos con un nombre específico sin usar archivos temporales. 
+<br><br>
+--
+
+- Cada `r text_spec2("clase de objeto")` tiene diferentes atributos que determinan la forma en que trabajan dentro de R, es decir, define cuáles funciones se le pueden aplicar. 
+<br><br>
+--
+
+- Estos objetos se pueden modificar o manipular con  `r text_spec2("operadores")` y `r text_spec2("funciones")` --que a su vez son objetos--. 
+<br><br>
+--
+
+- Bajo este término se esconde la simplicidad y flexibilidad de R. 
+<br><br>
+--
+
+- Algunas de las clases más comunes de objetos son: 'numeric', 'character', 'logical' (son `r text_spec2("vectores")`), 'matrix' (`r text_spec2("matriz")`), 'data.frame' (`r text_spec2("marco de datos")`), 'list' (`r text_spec2("lista")`) y 'function' (`r text_spec2("función")`).
+
+---
+class: hide-logo
+# Tipo de objetos
+
+La cantidad de clases de objetos es muy grande y crece permanentemente a medida que se crean nuevos paquetes.
+
+<!-- Casi en cada paquete existen funciones que devuelven objetos de clases únicas que sólo esa función puede -->
+<!-- # generar y cuya interpretación y funcionalidad es específica del paquete en -->
+<!-- # cuestión o de otros creados posteriormente y que dependen del mismo.  -->
+<!-- Por ejemplo las clases "igraph" o "Spatial" de los paquetes igraph y sp definen  -->
+<!-- # objetos asociados a trabajo con grafos y datos espaciales respectivamente. -->
+
+
+| Objeto      | Dimensión o largo           | Tipo de elementos | Ejemplo
+|---------------|:-------------:|:------:|:------:|
+| Vector    | length() | homogéneos |`r icon::fa_ellipsis_v(colour="#5e3c99", size=3)` |
+| Matriz   | dim() | homogéneos |   `r icon::fa_ellipsis_v(colour="#5e3c99", size=3)``r icon::fa_ellipsis_v(colour="#5e3c99", size=3)` |
+| Marco de datos    | dim() | heterogéneos |`r icon::fa_ellipsis_v(colour="#5e3c99", size=3)``r icon::fa_ellipsis_v(colour="#e66101", size=3)` `r icon::fa_ellipsis_v(colour="#41b6c4", size=3)`|
+| Lista   | length() | heterogéneos |`r icon::fa_circle(colour="#5e3c99")` <br> `r icon::fa_circle(colour="#e66101")` <br> `r icon::fa_circle(colour="#41b6c4")`| 
+
+---
+class: hide-logo
+# Vector
+
+- Los vectores son la `r text_spec2("estructura más básica")` que tenemos para manejar datos en R. 
+<br><br>
+--
+
+- Un `r text_spec2("escalar")` también es un `r text_spec2("vector")` para R. 
+<br><br>
+--
+
+- Comprender `r text_spec2("cómo se trabaja con un vector")` en R es fundamental para entender la lógica de R.
+<br><br>
+--
+
+- Veremos cómo los vectores trabajan con `r text_spec2("operadores y funciones")`.
+<br><br>
+--
+
+- `r text_spec2("Vectorización y coerción")`.
+
+---
+# Vector
+
+- Un vector es una `r text_spec2("colección de uno o más objetos del mismo tipo")` (números o caracteres pero no ambos).
+<br><br>
+--
+
+- Según sus elementos será la clase del vector: `r text_spec2("character")`, `r text_spec2("numeric")`, `r text_spec2("logical")`
+<br><br>
+--
+
+- La función  `r text_spec2("c()")` crea un vector.
+<br><br>
+--
+
+- Cada elemento va separado por una `r text_spec2("coma")`
+<br><br>
+--
+
+- Con la función `r text_spec2("class()")` compruebo que tipo de objeto es
+
+---
+class: hide-logo
+# Vector numérico
+
+```{r}
+x <- c(15, 16, 17, 19) #<<
+```
+--
+```{r}
+x
+```
+--
+```{r}
+class(x)#<<
+```
+Se crea con la función c(), y contiene solo números separados por coma.
+
+El separador de decimales es el punto.
+
+---
+class: hide-logo
+# Vector de caracteres
+
+- Para el caso de `r text_spec2("texto")`, la clase "character" es la que utiliza R para manejar este tipo de objetos. 
+
+- Al igual que en la mayoría de los lenguajes de programación, R utiliza las comillas dobles (`r text_spec2("\"")`) o simples (`r text_spec2("'")`) para delimitar un string. 
+
+
+```{r}
+w <- c("lunes", "martes", "miércoles", "viernes")#<<
+```
+--
+```{r}
+w
+```
+--
+```{r}
+class(w)#<<
+```
+
+---
+class: hide-logo
+# Vector de caracteres
+
+- Un vector de clase `character` también puede incluir `r text_spec2("números")` siempre que estén  `r text_spec2("entre comillas")`
+
+```{r}
+w <- c("15", "16", "17", "19") #<<
+```
+--
+```{r}
+w
+```
+--
+```{r}
+class(w) #<<
+```
+
+
+---
+# Nombrar objetos
+
+- Para nombrar objetos se pueden usar: `r text_spec2("letras")`, `r text_spec2("números")`, `r text_spec2("punto")`, `r text_spec2("guión bajo")` 
+<br><br>
+--
+
+- No puede empezar con números ni guión bajo: `r text_spec2("~~2019ech~~")`  `r text_spec2("~~_ech~~")` 
+<br><br>
+--
+
+- Si empieza con punto debe seguirle una letra: `r text_spec2(".ech")` 
+<br><br>
+--
+
+- Lo común es que comiencen con una letra: `r text_spec2("ech_2019")` 
+<br><br>
+--
+
+- R es `r text_spec2("sensible a mayúsculas y minúsculas")`: no es lo mismo Ech que ech
+<br><br>
+--
+
+- Esto último vale también para los nombres de funciones, no es lo mismo View() que view(), la segunda no existe.
+<!-- # ver -->
+
+<!--   https://www.computerworld.com/article/2497143/business-intelligence-beginner-s-guide-to-r-introduction.html -->
+
+
+---
+# Ejercicio (6')
+
+- Crea un objeto llamado `nombre` con tu nombre escrito todo en minúscula
+<br
+
+- Crea un objeto llamado  `apellido` con tu apellido escrito todo en minúscula
+<br>
+
+- Crea un objeto llamado `edad` con tu edad en números
+<br>
+
+- Pregunta la clase de cada uno de esos objetos e imprime el contenido de cada objeto.
+<br>
+
+- Crea un objeto llamado `nombre_completo` que contenga tu nombre y tu apellido, reutilizando los objetos creados. La función paste() puede ser de ayuda.
+<br>
+
+- ¿Cuántos caracteres tiene el objeto nombre, y el objeto apellido? La función `nchar()` puede ser de ayuda.
+
+---
+class: hide-logo
+# Coerción
+
+- Qué pasa si por error omito las comillas en un elemento:
+```{r}
+z <- c("lunes", 15)
+```
+--
+
+- R no da error en este caso, convierte al 15 en texto.  
+```{r}
+z
+class(z)
+```
+--
+Si se combinan objetos de diferentes tipos, R reasigna los elementos a la clase apropiada. Esto se llama coerción.
+
+
+---
+class: hide-logo
+# Coerción
+
+- Los elementos de un vector deben ser todos de la misma clase. 
+<br><br>
+--
+
+- Si se combinan objetos de diferente clase, R `r text_spec2("reasigna los elementos a la clase apropiada")`.
+<br><br>
+--
+
+- Como en el ejemplo que concatenaba elementos numéricos y caracteres, el vector será de clase `character`.
+<br><br>
+--
+
+- La coerción es necesaria para el funcionamiento correcto de R. Al mismo tiempo puede ser una fuente de errores si no se tiene en cuenta.
+<br><br>
+--
+
+- ¿Qué te imaginas pasará si en vez de omitir las comillas en 15, las omito en lunes?
+<br><br>
+--
+
+- Un texto sin comillas en R es un objeto (siempre que cumpla las reglas de un nombre de objeto).
+---
+class: hide-logo
+# Vectorización
+
+.pull-left[
+- R vectoriza las operaciones de manera que si sumo un número a un vector numérico, a cada elemento del vector le sumará ese número.
+
+- Esta propiedad es una ventaja ya que permite evitar loops en muchas de situaciones y de esta manera se obtiene un código más 'limpio' y eficiente.
+
+- El operador  `r text_spec2(":")` sirve para generar vectores numéricos
+
+]
+
+.pull-right[
+```{r vecto}
+x <- -1:4 #<<
+x
+```
+
+```{r}
+x + 5 # adiciono 5 #<<
+```
+
+```{r}
+x * 3 # multiplico por 3 #<<
+```
+
+]
+
+
+---
+class: hide-logo
+# ¿Por qué importa la clase de un objeto?
+
+- La clase de un objeto afecta cómo las funciones trabajan con el mismo. 
+<br><br>
+--
+
+- Por ejemplo, la función mean() puede generar salidas coherentes con objetos numéricos o lógicos, pero no con caracteres. 
+<br><br>
+--
+
+
+```{r eval=FALSE}
+x <- c("15", "16", "17", "19")
+mean(x)
+w + 5
+```
+
+- No toda función se puede aplicar a cualquier tipo de objeto.
+
+---
+class: hide-logo
+# Funciones descriptivas de un vector numérico
+
+- `r text_spec2("length(x)")`: devuelve la cantidad de elementos de x
+<br><br>
+--
+
+- `r text_spec2("sort(x, decreasing = F)")`: ordena los elementos de manera creciente 
+<br><br>
+--
+
+- `r text_spec2("sum(x)")`: devuelve la suma de los elementos de x
+<br><br>
+--
+
+- `r text_spec2("max(x)")`: máximo
+<br><br>
+--
+
+- `r text_spec2("min(x)")`: mínimo
+
+---
+class: hide-logo
+# Funciones descriptivas de un vector numérico
+
+- `r text_spec2("mean(x)")`: promedio aritmético de x
+<br><br>
+--
+
+- `r text_spec2("median(x)")`: mediana de x
+<br><br>
+--
+
+- `r text_spec2("sd(x)")`: desvío estándar de x
+<br><br>
+--
+
+- `r text_spec2("var(x)")`: varianza de x
+<br><br>
+--
+
+- `r text_spec2("summary(x)")`: resumen descriptivo de x (mínimo, máximo, media, mediana, cuartiles)
+---
+class: hide-logo
+# Data frame
+
+- Puede verse como un conjunto de vectores de diferente clase pero de igual largo.
+<br><br>
+--
+
+- La Función data.frame() crea un marco de datos.
+<br><br>
+--
+
+```{r eval = FALSE}
+df <- data.frame(x, w)
+```
+--
+
+- En un data frame, cada variable es un vector. 
+<br><br>
+--
+
+- En general el data frame vendrá dado en un archivo que vamos a leer/importar desde R.
+
+---
+# Atajos de teclado
+
+<center>
+<img src="https://media.giphy.com/media/vpURqIvpuDguQ/source.gif"/>
+</center>
+
+
+---
+class: hide-logo
+# Flecha: atajo de teclado en Linux/Windows
+(teclado en español)
+
+![](img/linux_flecha.png)
+
+---
+class: hide-logo
+# Flecha: atajo de teclado en Mac 
+(teclado en español)
+
+![](img/mac_flecha.png)
+
+---
+# Atajos de teclado
+
+```{r, out.height="100%", echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/teclas.png")
+```
+---
+# Advertencias (warnings) 
+
+- Mensajes de advertencia **(Warnings)**: no necesariamente hay un error (ejecuta los comandos y solo te advierte de posibles inconvenientes).
+
+```{r warning=TRUE}
+x1 <- c(2, 8, 3, 4, 1)
+x2 <- c(0, 7, 5, 5, 6, 1)
+pmax(x1, x2) 
+```
+
+
+---
+# Errores (errors)
+- Mensajes de error aparecen en la consola con el texto  `r text_spec2("Error: ...")`. 
+<br><br>
+--
+
+- El error impide que se ejecute(n) la(s) líneas con error.
+<br><br>
+--
+
+- Un error en el código es una orden que `r text_spec2("R no puede interpretar")` . 
+<br><br>
+--
+
+- Pueden deberse a `r text_spec2("funciones mal escritas")` , `r text_spec2("expresiones erróneas o incompletas")`, objetos que no han sido declarados, etc
+<br>
+```{r echo = FALSE, fig.align='center'}
+knitr::include_graphics("img/error_code.gif")
+```
+<br><br>
+--
+
+- Con `r text_spec2("práctica")` y la ayuda de los foros se `r text_spec2("aprende")` a entender los mensajes de error.
+
+
+
+---
+class: inverse, center, middle
+# Paquetes
+
+---
+class: hide-logo
+# Paquetes: extender las funcionalidades de R
+
+- Por defecto vienen `r text_spec2("precargadas")` una serie de funciones que están en el paquete `r text_spec2("'base'")`.
+<br><br>
+--
+
+- Las `r text_spec2("funciones")` en R se organizan en paquetes según `r text_spec2("temas")` o disciplinas.
+<br><br>
+--
+
+- Los paquetes debe `r text_spec2("instalarse en R una vez")` pero es necesario `r text_spec2("cargarlos en cada sesión")` (cada vez que abrimos R). 
+<br><br>
+--
+
+- Hay millones de funciones si todas estuvieran precargadas, no habría suficiente memoria RAM para trabajar. Existen paquetes de tan variadas disciplinas que es muy probable que utilicemos relativamente pocos. 
+<br><br>
+--
+
+- Podemos consultar los paquetes disponibles escribiendo la función `r text_spec2("available.packages()")` y los instalados usando `r text_spec2("installed.packages()")`. También podemos generar nuestras propias funciones e incluso crear un paquete de R!
+
+---
+
+class: inverse, center, middle
+#Encuesta Continua de Hogares
+
+<!-- ![](img/ech_ine.jpg) -->
+
+---
+# `r icon::fa("box-open")` Características
+
+- La Encuesta Continua de Hogares (ECH), releva información de los `r text_spec2("hogares particulares")` uruguayos, realizada anualmente por el Instituto Nacional de Estadística (INE).       
+<br>
+--
+
+- Un hogar particular "es  la  persona  o  grupo  de  personas  que  habitan  bajo  un  `r text_spec2("mismo  techo")`  y  que  al  menos  para  su  alimentación,  dependen  de  un  `r text_spec2("fondo  común")`" ([Metodología ENHA 2006](http://www.ine.gub.uy/documents/10181/36026/metodologia+enha+2006.pdf/89bcaa25-5099-46a7-bc1e-9f577c92b21e)).  
+<br>
+--
+
+- Se debe definir una persona `r text_spec2("jefa de hogar")` la que se  tomará  como  referencia para determinar la relación entre quienes integran el hogar.
+<br><br>
+--
+
+- Los objetivos son obtener `r text_spec2("indicadores")` para monitorear la evolución del `r text_spec2("mercado de trabajo")`, el `r text_spec2("ingreso")` de los hogares y las condiciones de vida de la población.     
+<br>
+--
+
+- Los microdatos se obtienen desde la [web del INE](http://ine.gub.uy/web/guest/encuesta-continua-de-hogares1)       
+
+---
+# Dimensiones
+
+- La ECH releva información referente a la vivienda, el hogar y las personas:
+
+  - Características de la `r text_spec2("vivienda")`
+      - Tenencia
+      - Materiales de construcción, etc.
+      
+  - Características del `r text_spec2("hogar")`
+      - Cantidad de personas
+      - Relaciones de parentesco, etc.
+  
+  - Características de las `r text_spec2("personas")` que integran los hogares relevados
+      - Situación ocupacional de las personas de 14 o más años
+      - Ingresos
+      - Educación, etc.
+
+---
+class: inverse, center, middle
+# ech
+
+---
+# Paquete ech
+
+- Es un paquete de R para `r text_spec2("facilitar el procesamiento")`de la Encuesta Continua de Hogares. 
+
+- En su versión actual admite trabajar con las ECH de `r text_spec2("2011 a 2019")`. 
+
+- Está pensado para trabajar con los `r text_spec2("microdatos fusionados")` (hogares y personas).
+
+- Está en `r text_spec2("proceso de aceptación")` en CRAN. Ahora disponible en [github](https://github.com/calcita/ech).
+
+- Lo desarrollo junto a [Richard Detomasi](https://github.com/RichDeto).
+
+```{r out.width = "110px" ,fig.align="center", echo=FALSE}
+knitr::include_graphics("https://raw.githubusercontent.com/calcita/ech/master/man/figures/ech_logo.png")
+```
+---
+# Historia y motivación de ech
+
+.left-column[
+
+
+```{r out.width = "110px" ,fig.align="center", echo=FALSE}
+knitr::include_graphics("https://raw.githubusercontent.com/RichDeto/geouy/master/man/figures/geouy_logo_b.png")
+```
+
+```{r out.width = "110px" ,fig.align="center", echo=FALSE}
+knitr::include_graphics("https://raw.githubusercontent.com/holatam/eph/master/man/figures/logo.png")
+```
+
+
+```{r out.width = "110px" ,fig.align="center", echo=FALSE}
+knitr::include_graphics("https://camo.githubusercontent.com/09731059c02d852f557d90e2b2fd5ba8a3e97f03/68747470733a2f2f70616368616d616c746573652e6769746875622e696f2f636173656e2f68657869636f6e2e737667")
+```
+
+] 
+.right-column[
+
+
+- Una `r text_spec2("puerta de entrada")` a R.
+
+- `r text_spec2("Democratizar")` el uso de la ECH, brindando una herramienta libre y gratuita.
+
+- Fomentar la `r text_spec2("publicación de código")`, no tan común por acá.
+
+- Al principio era rech y así lo presentamos en diferentes eventos de R.
+
+- Luego conocimos otros `r text_spec2("proyectos similares")`: [eph](https://github.com/holatam/eph) (Argentina)  y [casen](https://github.com/pachamaltese/casen) (Chile)... Cambiamos el nombre y quitamos la parte de visualización y Richard creó [geouy](https://github.com/RichDeto/geouy)
+]
+  
+---
+# Ventajas de usar ech
+
+- Función para `r text_spec2("descargar los microdatos")` desde la web del INE
+
+- Funciones para `r text_spec2("calcular variables")`: mercado de trabajo, ingresos, educación, etc.
+
+- Funciones para `r text_spec2("estimar indicadores")`: devuelven siempre un data.frame en formato tidy
+
+- Funciones para `r text_spec2("descargar los datos de IPC, IPAB")`, entre otros, también en un formato tidy.
+
+- Función para `r text_spec2("descargar el diccionario")` comparado entre bases de distintos años.
+
+- [Documentación](https://calcita.github.io/ech/index.html) para facilitar su uso
+
+<!-- ![](https://raw.githubusercontent.com/calcita/Curso-rECH/master/images/descargar_ech.gif) -->
+
+
+<!-- ![](https://raw.githubusercontent.com/calcita/Curso-rECH/master/images/unrar_ech.gif) -->
+
+---
+class: inverse, center, middle
+# devtools::install_github()
+
+---
+# Instalar y cargar ech
+
+- Un paquete `r text_spec2("se instala una única vez")`. 
+
+- Para instalarlo desde `r text_spec2("CRAN")` usamos la función `r text_spec2("install.packages() ")`.
+
+- Para instalarlo desde `r text_spec2("github")` usamos la función `r text_spec2("install_github()")`. Esta función está en el paquete `r text_spec2("devtools")`, si no lo tenemos instalado debemos hacerlo.
+
+```{r eval = FALSE}
+# instalamos devtools desde CRAN
+install.packages("devtools")
+```
+```{r eval = FALSE}
+# instalamos ech desde github
+devtools::install_github("calcita/ech")
+```
+- Lo `r text_spec2("cargamos a la sesión")` de trabajo con la función `r text_spec2("library()")`
+
+```{r eval = TRUE}
+library(ech) 
+```
+
+---
+class: inverse, center, middle
+# ech::get_microdata()
+
+---
+# Descargar, descomprimir y leer
+
+La función `r text_spec2("get_microdata()")` se encarga de:
+
+- `r text_spec2("descargar")` los microdatos del año indicado desde la web del INE 
+
+- `r text_spec2("descomprimir")` el archivo
+
+- `r text_spec2("leer")` en R el archivo que contiene datos de personas y hogares fusionado
+
+- `r text_spec2("guardar")` el objeto en formato RData (opcional)
+
+```{r echo = FALSE}
+load("data/df2019.RData")
+ech19 <- df2019
+```
+
+```{r eval = FALSE}
+# leer archivo de 2019
+ech19 <- get_microdata(year = 2019, toR = TRUE)#<<
+
+# consultar clase de objeto
+class(ech19)
+```
+El archivo descargado, va por defecto a una carpeta temporal.
+
+---
+# Directorio de trabajo (working directory)
+
+
+- Refiere a los archivos que están en la `r text_spec2("computadora")`
+<br><br>
+--
+- `r text_spec2("getwd()")`: muestra la ruta del directorio de trabajo. R trabaja por defecto en cierta carpeta que se llama directorio de trabajo donde va a leer y guardar los archivos.
+<br><br>
+--
+- `r text_spec2("setwd()")`: define el directorio de trabajo, para modificarlo.
+  - No es recomendable que la correcta ejecución de la sintaxis dependa de una ruta específica...
+  - Más adelante veremos qué es trabajar en proyecto (Rproj) para salvar este problema.
+--
+
+- `r text_spec2("dir()")`: muestra los archivos que están en el directorio de trabajo
+<br><br>
+--
+- R no entiende el `r text_spec2("\\")` (con backslash se escriben las rutas en Windows)
+<br><br>
+--
+- Las rutas en R se definen con `r text_spec2("/")` y también es válido  usar `\\`
+
+
+---
+class: inverse, center, middle
+# Explorar los datos
+
+---
+# "Ver" los datos
+
+
+```{r eval = FALSE}
+# ver los primeros casos del objeto en la consola
+head(ech19) #<<
+```
+
+```{r echo = FALSE}
+ech19 %>% dplyr::slice(1:3) %>% dplyr::select(1:8)
+```
+
+```{r eval=FALSE}
+# ver los últimos casos del objeto en la consola
+tail(ech19)
+
+# ver el conjunto de datos en un ventana
+View(ech19)
+
+# ver que contiene directo en la consola. No recomendado!!!
+ech19
+```
+
+
+---
+# ¿Qué queremos averiguar de estos datos?
+
+- Primero me hago preguntas, luego pienso cuál es el código que las responde
+<br><br>
+--
+
+- ¿Cuáles son las `r text_spec2("variables")`? ¿Cuántas son?
+<br><br>
+--
+
+- ¿Cuántas `r text_spec2("observaciones")` tiene?
+<br><br>
+--
+
+- ¿Cuál es el `r text_spec2("identificador")` del hogar?
+<br><br>
+--
+
+- ¿Hay datos `r text_spec2("faltantes")`?
+<br><br>
+--
+
+- ¿Hay casos `r text_spec2("duplicados")`?
+
+---
+# Explorar los datos
+
+Las funciones `r text_spec2("dim()")` y `r text_spec2("names()")` admiten un data frame como argumento. 
+
+```{r}
+dim(ech19)  # cantidad de filas y columnas #<<
+nrow(ech19) # cantidad de filas
+ncol(ech19) # cantidad de columnas
+```
+```{r eval=FALSE}
+names(ech19)  # nombre de variables #<<
+
+sort(names(ech19)) # ver los nombres por orden alfabético
+```
+
+---
+class: inverse, center, middle
+# ech::organize_names()
+
+
+---
+# Estandarizar los nombres de variables
+  
+- Los nombres de las variables pueden sufrir modificaciones entre un año y otro de la encuesta.
+
+- La función `r text_spec2("organize_names()")` convierte todos los nombres a la ECH 2017
+
+- Las variables pueden sufrir entre un año y otro un cambio en sus categorías, esto se contempla en las funciones que crean variables.
+
+- Estandarizar los nombres facilita el uso de ech pero `r text_spec2("no es imprescindible")`.
+
+```{r}
+# estandarizo nombres
+ech19 <- organize_names(data = ech19, year = 2019) #<<
+```
+---
+# Explorar los datos 
+
+La función `r text_spec2("summary()")` admite un data frame como argumento pero también una variable.
+
+```{r eval = FALSE}
+# estructura del objeto
+str(ech19)
+
+# resumen descriptivo de variables
+summary(ech19)
+
+# una variable específica
+
+summary(ech19$region_3)
+```
+Para acceder a una variable de un data frame es necesario escribir  `r text_spec2("<objeto>$<variable>")`
+
+---
+# Variables numéricas
+
+La variable `r text_spec2("d9")` es el "número de habitaciones residenciales".
+
+.pull-left[
+```{r eval=TRUE}
+# Máximo
+max(ech19$d9) #<<
+```
+```{r eval=TRUE}
+# Mínimo
+min(ech19$d9) #<<
+```
+```{r eval=TRUE}
+# Promedio
+mean(ech19$d9) #<<
+```
+
+]
+
+.pull-right[
+```{r eval=TRUE}
+# Mediana
+median(ech19$d9) #<<
+```
+
+```{r eval=TRUE}
+# Varianza
+var(ech19$d9) #<<
+```
+```{r eval=TRUE}
+# Desvío estándar
+sd(ech19$d9) #<<
+```
+]
+---
+# Variables categóricas
+
+La función `r text_spec2("table()")` permite hacer una tabla de `r text_spec2("frecuencias absolutas.")` 
+```{r}
+table(ech19$nomdpto) #<<
+
+# Tabla de frecuencias relativas
+?prop.table
+```
+
+La salida que generan estas funciones no es tidy y conforme más categorías tiene una variable se vuelve más confusa.
+
+
+
