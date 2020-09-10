@@ -430,7 +430,7 @@ class: inverse, center, middle
 # Buscar ayuda
 
 - Ayuda en R:
-  - Si sabemos el nombre de la función exactamente: `r text_spec2("?gini")`, `r text_spec2("help(gini)")`
+  - Si sabemos el nombre de la función exactamente: `r text_spec2("?gini")`, `r text_spec2("help('gini')")`
   - Si no sabemos el nombre exacto pero debería contener el término gini: `r text_spec2("??gini")`
   
 - Ayuda externa a R: 
@@ -1163,18 +1163,17 @@ La función `r text_spec2("get_microdata()")` se encarga de:
 - `r text_spec2("guardar")` el objeto en formato RData (opcional)
 
 ```{r echo = FALSE}
-load("data/df2019.RData")
-ech19 <- df2019
+load("data/ech19.RData")
 ```
 
 ```{r eval = FALSE}
 # leer archivo de 2019
-ech19 <- get_microdata(year = 2019, toR = TRUE)#<<
+ech19 <- get_microdata(year = 2019, folder = "/home/calcita/Desktop", toR = FALSE)#<<
 
 # consultar clase de objeto
 class(ech19)
 ```
-El archivo descargado, va por defecto a una carpeta temporal.
+El archivo descargado, va por defecto a una carpeta temporal si no definimos una ruta en el argumento *folder*.
 
 ---
 # Directorio de trabajo (working directory)

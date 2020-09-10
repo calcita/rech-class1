@@ -417,7 +417,7 @@ class: inverse, center, middle
 # Buscar ayuda
 
 - Ayuda en R:
-  - Si sabemos el nombre de la función exactamente: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;?gini&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;help(gini)&lt;/span&gt;
+  - Si sabemos el nombre de la función exactamente: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;?gini&lt;/span&gt;, &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;help('gini')&lt;/span&gt;
   - Si no sabemos el nombre exacto pero debería contener el término gini: &lt;span style=" font-weight: bold;    border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #b3e2cd !important;" &gt;??gini&lt;/span&gt;
   
 - Ayuda externa a R: 
@@ -1215,12 +1215,12 @@ La función &lt;span style=" font-weight: bold;    border-radius: 4px; padding-r
 
 ```r
 # leer archivo de 2019
-*ech19 &lt;- get_microdata(year = 2019, toR = TRUE)
+*ech19 &lt;- get_microdata(year = 2019, folder = "/home/calcita/Desktop", toR = FALSE)
 
 # consultar clase de objeto
 class(ech19)
 ```
-El archivo descargado, va por defecto a una carpeta temporal.
+El archivo descargado, va por defecto a una carpeta temporal si no definimos una ruta en el argumento *folder*.
 
 ---
 # Directorio de trabajo (working directory)
